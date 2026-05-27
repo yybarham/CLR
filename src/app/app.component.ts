@@ -12,6 +12,20 @@ export class AppComponent implements OnInit {
   readonly TUBE_SIZE = 4;
 
   readonly COLORS = [
+    '#C92C55',
+    '#422676',
+    '#A048A8',
+    '#D39BE3',
+    '#2B58C1',
+    '#34B1BF',
+    '#67B73F',
+    '#166422',
+    '#EEDB44',
+    '#D58434',
+    '#9B5629',
+    '#CE818D',
+  ];
+  readonly COLORS_ = [
     '#FF0000',
 
     '#FFFF00',
