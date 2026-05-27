@@ -1,120 +1,98 @@
-
 <div class="game-wrapper">
-
- 
-
-    <div class="header">
-
-        <a routerLink="/home" class="back-link">&#8592; Home</a>
-
-        <h1> Color Sort</h1>
-
-        <div class="moves-display">Moves: <strong>{{ moves }}</strong></div>
-
+  <div class="header" style="display: none;">
+    <div class="moves-display">
+      Moves: <strong>{{ moves }}</strong>
     </div>
+  </div>
 
- 
+  <div class="toolbar">
+    <label for="difficulty-select">D:</label>
 
-    <div class="toolbar">
+    <select
+      #diffSelect
+      id="difficulty-select"
+      [(ngModel)]="difficulty"
+      (change)="newGame(difficulty)"
+    >
+      @for (level of DIFFICULTY_LEVELS; track level) {
+        <option [ngValue]="level">{{ level }}</option>
+      }
+    </select>
 
-        <label for="difficulty-select">Difficulty:</label>
+    <div class="divider"></div>
 
-        <select #diffSelect id="difficulty-select" [(ngModel)]="difficulty" (change)="newGame(difficulty)">
+    <button class="restart-btn" (click)="newGame()">New</button>
 
-            @for (level of DIFFICULTY_LEVELS; track level) {
+    <button
+      class="restart-btn"
+      (click)="restartGame()"
+      [disabled]="moves === 0"
+    >
+      Rest
+    </button>
 
-            <option [ngValue]="level">{{ level }}</option>
+    <button
+      class="restart-btn"
+      (click)="undo()"
+      [disabled]="moveHistory.length === 0"
+    >
+      Undo
+    </button>
 
-            }
+    <button class="restart-btn" (click)="showNext()" [disabled]="won">
+      Hint
+    </button>
+  </div>
 
-        </select>
-
-        <div class="divider"></div>
-
-        <button class="restart-btn" (click)="newGame()">New Game</button>
-
-        <button class="restart-btn" (click)="restartGame()" [disabled]="moves === 0">Restart</button>
-
-        <button class="restart-btn" (click)="undo()" [disabled]="moveHistory.length === 0">Undo</button>
-
-        <button class="restart-btn" (click)="showNext()" [disabled]="won">Hint</button>
-
-    </div>
-
- 
-
-    <div class="tubes-grid" [style.grid-template-columns]="gridColumns">
-
-        @for (tube of tubes; track $index; let i = $index) {
-
-        <div class="tube-wrapper" [class.lifted]="selectedIndex === i" [class.solved]="isSolved(tube)"
-
-            [class.valid-target]="isValidTarget(i)" (click)="onTubeClick(i)">
-
-            <div class="tube">
-
-                @for (slot of getSlots(tube); track $index) {
-
-                <div class="color-slot" [class.empty]="!slot" [style.background]="slot ?? ''">
-
-                </div>
-
-                }
-
-            </div>
-
-            <div class="tube-base"></div>
-
-            @if (isSolved(tube)) {
-
-            <div class="tube-cover"></div>
-
-            }
-
+  <div class="tubes-grid" [style.grid-template-columns]="gridColumns">
+    @for (tube of tubes; track $index; let i = $index) {
+      <div
+        class="tube-wrapper"
+        [class.lifted]="selectedIndex === i"
+        [class.solved]="isSolved(tube)"
+        [class.valid-target]="isValidTarget(i)"
+        (click)="onTubeClick(i)"
+      >
+        <div class="tube">
+          @for (slot of getSlots(tube); track $index) {
+            <div
+              class="color-slot"
+              [class.empty]="!slot"
+              [style.background]="slot ?? ''"
+            ></div>
+          }
         </div>
 
+        <div class="tube-base"></div>
+
+        @if (isSolved(tube)) {
+          <div class="tube-cover"></div>
         }
-
-    </div>
-
- 
-
-    <div class="color-palette" style="display: none;">
-
-        @for (color of COLORS; track color) {
-
-        <div class="color-cell" [style.background]="color"></div>
-
-        }
-
-    </div>
-
- 
-
-    @if (won) {
-
-    <div class="win-overlay" (click)="closeWinPopup()">
-
-        <div class="win-card" (click)="$event.stopPropagation()">
-
-            <button class="close-btn" (click)="closeWinPopup()">✕</button>
-
-            <div class="win-emoji">🎉</div>
-
-            <h2>Puzzle Solved!</h2>
-
-            <p>Completed in <strong>{{ moves }}</strong> moves</p>
-
-            <button (click)="newGame()">Play Again</button>
-
-        </div>
-
-    </div>
-
+      </div>
     }
+  </div>
 
- 
+  <div class="color-palette" style="display: none">
+    @for (color of COLORS; track color) {
+      <div class="color-cell" [style.background]="color"></div>
+    }
+  </div>
 
+  @if (won) {
+    <div class="win-overlay" (click)="closeWinPopup()">
+      <div class="win-card" (click)="$event.stopPropagation()">
+        <button class="close-btn" (click)="closeWinPopup()">✕</button>
+
+        <div class="win-emoji">🎉</div>
+
+        <h2>Puzzle Solved!</h2>
+
+        <p>
+          Completed in <strong>{{ moves }}</strong> moves
+        </p>
+
+        <button (click)="newGame()">Play Again</button>
+      </div>
+    </div>
+  }
 </div>
-
- 

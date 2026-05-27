@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [FormsModule, RouterLink],
+  imports: [FormsModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
@@ -50,7 +49,7 @@ export class AppComponent implements OnInit {
 
   won = false;
 
-  difficulty: number = 4;
+  difficulty: number = 12;
 
   isCurrentSolvable = true;
 
