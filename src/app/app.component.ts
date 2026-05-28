@@ -11,46 +11,35 @@ import { FormsModule } from '@angular/forms';
 export class AppComponent implements OnInit {
   readonly TUBE_SIZE = 4;
 
-  readonly COLORS = [
-    '#C92C55',
-    '#422676',
-    '#A048A8',
-    '#D39BE3',
-    '#2B58C1',
-    '#34B1BF',
-    '#67B73F',
-    '#166422',
-    '#EEDB44',
-    '#D58434',
-    '#9B5629',
-    '#CE818D',
-  ];
   readonly COLORS_ = [
-    '#FF0000',
-
-    '#FFFF00',
-
-    '#0000FF',
-
-    '#00FF00',
-
-    '#FF9800',
-
-    '#2196F3',
-
-    '#3F51B5',
-
-    '#795548',
-
-    '#95E1D3',
-
-    '#9C27B0',
-
-    '#9D4EDD',
-
-    '#4CAF50',
+    '#3D6CCB',
+    '#5B3A9E',
+    '#E56ACF',
+    '#C93A58',
+    '#F6A3B2',
+    '#E7D34A',
+    '#79C45A',
+    '#2F5D32',
+    '#74C6DC',
+    '#C8A4E8',
+    '#B96A2E',
+    '#7A5CE0',
   ];
 
+  readonly COLORS = [
+    '#FF0000',
+    '#FFFF00',
+    '#0000FF',
+    '#00FF00',
+    '#058743', //'#004721',
+    '#FF9800',
+    '#95E1D3',
+    '#ff48a5',
+    '#634087',
+    '#C785EC',
+    '#bb6d3e',
+    '#9F9F9F',
+  ];
   readonly DIFFICULTY_LEVELS = [3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
   tubes: string[][] = [];
