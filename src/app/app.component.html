@@ -6,7 +6,7 @@
   </div>
 
   <div class="toolbar">
-    <label for="difficulty-select">D:</label>
+    <label for="difficulty-select"></label>
 
     <select
       #diffSelect
@@ -39,8 +39,8 @@
       Undo
     </button>
 
-    <button class="restart-btn" (click)="showNext()" [disabled]="won">
-      Hint
+    <button [disabled]="!isCurrentSolvable" class="restart-btn" (click)="showNext()" [disabled]="won">
+      Hint0
     </button>
   </div>
 

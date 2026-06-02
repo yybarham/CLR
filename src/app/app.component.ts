@@ -13,27 +13,16 @@ export class AppComponent implements OnInit {
 
   readonly COLORS = [
     '#FF0000',
-
     '#FFFF00',
-
     '#0000FF',
-
     '#00FF00',
-
     '#FF9800',
-
     '#2196F3',
-
     '#3F51B5',
-
     '#795548',
-
     '#95E1D3',
-
     '#9C27B0',
-
     '#9D4EDD',
-
     '#4CAF50',
   ];
 
@@ -57,6 +46,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.newGame();
+    this.verifySolvable();
   }
 
   newGame(difficulty?: number): void {
@@ -466,12 +456,12 @@ export class AppComponent implements OnInit {
       JSON.parse(JSON.stringify(this.tubes)),
     );
 
-    alert(
-      this.isCurrentSolvable
-        ? '✓ Puzzle is solvable!'
-        : '✗ Puzzle appears unsolvable. Try restarting.',
-    );
+    this.LBL = this.isCurrentSolvable
+      ? '✓ Puzzle is solvable!'
+      : '✗ Puzzle appears unsolvable. Try restarting.';
   }
+
+  LBL = '';
 
   closeWinPopup(): void {
     this.won = false;

@@ -297,11 +297,11 @@
 
   height: 45%;
 
-  background: linear-gradient(
+  /* background: linear-gradient(
     to bottom,
     rgba(255, 255, 255, 0.18),
     transparent
-  );
+  ); */
 
   pointer-events: none;
 }
@@ -331,7 +331,7 @@
 
   top: 0;
 
-  width: 52px;
+  width: 45px;
 
   height: 12px;
 
