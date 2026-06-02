@@ -1,1 +1,1 @@
-ng s -o
+ng s -o 

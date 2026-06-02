@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
     '#9D4EDD',
     '#4CAF50',
   ];
-
+  
   readonly DIFFICULTY_LEVELS = [3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
   tubes: string[][] = [];

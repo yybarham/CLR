@@ -566,22 +566,22 @@
   }
 
   .tubes-grid {
-    gap: 8px;
-
-    padding: 8px;
+    gap: 14px;
+    row-gap: 68px;
+    padding: 48px;
   }
 
   .tube {
-    width: 40px;
+    width: 28px;
   }
 
   .tube-base {
-    width: 40px;
+    width: 28px;
 
     border-radius: 0 0 24px 24px;
   }
 
   .color-slot {
-    height: 32px;
+    height: 28px;
   }
 }
