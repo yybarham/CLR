@@ -25,46 +25,45 @@ export class AppComponent implements OnInit {
     '#9D4EDD',
     '#4CAF50',
   ];
-  
+
   readonly DIFFICULTY_LEVELS = [3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-
   tubes: string[][] = [];
-
   moveHistory: string[][][] = [];
-
   selectedIndex: number | null = null;
-
   moves = 0;
-
   won = false;
-
   difficulty: number = 12;
-
-  isCurrentSolvable = true;
-
+  isCurrentSolvable = false;
   solutionPath: string[][][] = [];
 
   ngOnInit(): void {
     this.newGame();
-    this.verifySolvable();
   }
 
   newGame(difficulty?: number): void {
+    this.isCurrentSolvable = false;
     if (difficulty) this.difficulty = difficulty;
-
     this.moves = 0;
-
     this.won = false;
-
     this.selectedIndex = null;
-
     this.tubes = this.generateLevel(this.difficulty);
-
     this.moveHistory = [];
-
     this.solutionPath = [];
-
     this.saveGame();
+    this.checkSolvable();
+  }
+
+  checkSolvable() {
+    if (this.solutionPath.length === 0) {
+      this.solutionPath = this.findSolution(
+        JSON.parse(JSON.stringify(this.tubes)),
+      );
+      if (this.solutionPath.length === 0) {
+        //alert('No solution found from current state. Try undoing some moves.');
+        return;
+      }
+    }
+    this.isCurrentSolvable = true;
   }
 
   restartGame(): void {
@@ -139,9 +138,7 @@ export class AppComponent implements OnInit {
 
   private isSolvable(initialTubes: string[][]): boolean {
     const TUBE_SIZE = this.TUBE_SIZE;
-
     const MAX_STATES = 30000;
-
     const serialize = (tubes: string[][]): string =>
       tubes
         .map((t) => t.join(','))
@@ -163,23 +160,16 @@ export class AppComponent implements OnInit {
       if (visited.size > MAX_STATES) return true; // Limit reached — assume solvable
 
       const state = stack.pop()!;
-
       if (isWon(state)) return true;
-
       for (let from = 0; from < state.length; from++) {
         const src = state[from];
-
         if (src.length === 0) continue;
-
         // Skip tubes that are already fully sorted
-
         if (src.length === TUBE_SIZE && src.every((c) => c === src[0]))
           continue;
 
         const topColor = src[src.length - 1];
-
         const isAllSameColor = src.every((c) => c === topColor);
-
         for (let to = 0; to < state.length; to++) {
           if (from === to) continue;
 
@@ -451,17 +441,13 @@ export class AppComponent implements OnInit {
     return []; // No solution found
   }
 
-  verifySolvable(): void {
-    this.isCurrentSolvable = this.isSolvable(
-      JSON.parse(JSON.stringify(this.tubes)),
-    );
+  // verifySolvable(): void {
+  //   this.isCurrentSolvable = this.isSolvable(
+  //     JSON.parse(JSON.stringify(this.tubes)),
+  //   );
 
-    this.LBL = this.isCurrentSolvable
-      ? '✓ Puzzle is solvable!'
-      : '✗ Puzzle appears unsolvable. Try restarting.';
-  }
-
-  LBL = '';
+  //   ``;
+  // }
 
   closeWinPopup(): void {
     this.won = false;

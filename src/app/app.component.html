@@ -1,5 +1,5 @@
 <div class="game-wrapper">
-  <div class="header" style="display: none;">
+  <div class="header" style="display: none">
     <div class="moves-display">
       Moves: <strong>{{ moves }}</strong>
     </div>
@@ -39,8 +39,8 @@
       Undo
     </button>
 
-    <button [disabled]="!isCurrentSolvable" class="restart-btn" (click)="showNext()" [disabled]="won">
-      Hint0
+    <button class="restart-btn" (click)="showNext()" [disabled]="won">
+      H1({{isCurrentSolvable}})
     </button>
   </div>
 
