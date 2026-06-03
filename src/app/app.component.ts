@@ -16,14 +16,14 @@ export class AppComponent implements OnInit {
     '#FFFF00',
     '#0000FF',
     '#00FF00',
+    '#058743', //'#004721',
     '#FF9800',
-    '#2196F3',
-    '#3F51B5',
-    '#795548',
     '#95E1D3',
-    '#9C27B0',
-    '#9D4EDD',
-    '#4CAF50',
+    '#ff48a5',
+    '#634087',
+    '#C785EC',
+    '#bb6d3e',
+    '#9F9F9F',
   ];
 
   readonly DIFFICULTY_LEVELS = [3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
