@@ -148,8 +148,7 @@
 }
 .tube-wrapper.valid-target .tube,
 .tube-wrapper.valid-target .tube-base {
-  border-color: #10b981;
-  animation: pulse-border 0.9s ease infinite alternate;
+  border-color: red;
 }
 @keyframes pulse-border {
   from {
