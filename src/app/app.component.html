@@ -1,10 +1,4 @@
 <div class="game-wrapper">
-  <div class="header" style="display: none">
-    <div class="moves-display">
-      Moves: <strong>{{ moves }}</strong>
-    </div>
-  </div>
-
   <div class="toolbar">
     <label for="difficulty-select"></label>
 
@@ -39,9 +33,22 @@
       Undo
     </button>
 
-    <button class="restart-btn" (click)="showNext()" [disabled]="won">
-      H2({{isCurrentSolvable}})
+    <button
+      class="restart-btn"
+      style="display: none"
+      (click)="showNext()"
+      [disabled]="won"
+    >
+      H2({{ isCurrentSolvable }})
     </button>
+  </div>
+
+  <div class="header" style="display: block">
+    Moves: <strong>{{ moves }}</strong> 
+    @if(!isCurrentSolvable){
+      &nbsp;<span> not solvable !</span>
+    }
+    
   </div>
 
   <div class="tubes-grid" [style.grid-template-columns]="gridColumns">
