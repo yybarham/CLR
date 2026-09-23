@@ -21,9 +21,7 @@
       class="restart-btn"
       (click)="restartGame()"
       [disabled]="moves === 100"
-    >
-      Rest {{ restCount }}
-    </button>
+    > Rest {{ restCount }}</button>
 
     <button
       class="restart-btn"
@@ -36,9 +34,9 @@
     <button
       class="restart-btn"
       (click)="showNext()"
-      [disabled]="won || restCount < 5"
+      [disabled]="won || restCount < 25"
     >
-      H2({{ solutionPath.length }})
+      H({{ solutionPath.length }})
     </button>
   </div>
 

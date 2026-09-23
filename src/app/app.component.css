@@ -44,7 +44,7 @@
   align-items: center;
 }
 .toolbar button {
-  padding: 8px 16px;
+  padding: 8px 8px;
   background: transparent;
   border: 2px solid #999;
   color: #333;
