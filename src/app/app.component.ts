@@ -30,13 +30,13 @@ export class AppComponent implements OnInit {
   moves = 0;
   won = false;
   difficulty: number = 12;
-  isCurrentSolvable = false;
   solutionPath: string[][][] = [];
+  restCount = 0;
   ngOnInit(): void {
     this.newGame();
   }
   newGame(difficulty?: number): void {
-    this.isCurrentSolvable = false;
+    this.restCount = 0;
     if (difficulty) this.difficulty = difficulty;
     this.moves = 0;
     this.won = false;
@@ -49,15 +49,19 @@ export class AppComponent implements OnInit {
   }
   checkSolvable() {
     if (this.solutionPath.length === 0) {
-      this.solutionPath = this.findSolution(JSON.parse(JSON.stringify(this.tubes)));
+      this.solutionPath = this.findSolution(
+        JSON.parse(JSON.stringify(this.tubes)),
+      );
+      console.log(this.solutionPath.length);
+
       if (this.solutionPath.length === 0) {
         //alert('No solution found from current state. Try undoing some moves.');
         return;
       }
     }
-    this.isCurrentSolvable = true;
-  }
+``  }
   restartGame(): void {
+    this.restCount++;
     const saved = localStorage.getItem('colorSortGame');
     if (saved) {
       this.tubes = JSON.parse(saved);
@@ -96,14 +100,25 @@ export class AppComponent implements OnInit {
       }
       attempts++;
     }
-    alert('Failed to generate a solvable level after multiple attempts. Please try again.');
+    alert(
+      'Failed to generate a solvable level after multiple attempts. Please try again.',
+    );
     return tubes;
   }
   private isSolvable(initialTubes: string[][]): boolean {
     const TUBE_SIZE = this.TUBE_SIZE;
     const MAX_STATES = 30000;
-    const serialize = (tubes: string[][]): string => tubes.map((t) => t.join(',')).sort().join('|');
-    const isWon = (tubes: string[][]): boolean => tubes.every((t) => t.length === 0 || (t.length === TUBE_SIZE && t.every((c) => c === t[0])));
+    const serialize = (tubes: string[][]): string =>
+      tubes
+        .map((t) => t.join(','))
+        .sort()
+        .join('|');
+    const isWon = (tubes: string[][]): boolean =>
+      tubes.every(
+        (t) =>
+          t.length === 0 ||
+          (t.length === TUBE_SIZE && t.every((c) => c === t[0])),
+      );
     const visited = new Set<string>([serialize(initialTubes)]);
     const stack: string[][][] = [initialTubes.map((t) => [...t])];
     while (stack.length > 0) {
@@ -113,7 +128,8 @@ export class AppComponent implements OnInit {
       for (let from = 0; from < state.length; from++) {
         const src = state[from];
         if (src.length === 0) continue;
-        if (src.length === TUBE_SIZE && src.every((c) => c === src[0])) continue;
+        if (src.length === TUBE_SIZE && src.every((c) => c === src[0]))
+          continue;
         const topColor = src[src.length - 1];
         const isAllSameColor = src.every((c) => c === topColor);
         for (let to = 0; to < state.length; to++) {
@@ -125,7 +141,11 @@ export class AppComponent implements OnInit {
           const next = state.map((t) => [...t]);
           const s = next[from],
             d = next[to];
-          while (s.length > 0 && s[s.length - 1] === topColor && d.length < TUBE_SIZE) {
+          while (
+            s.length > 0 &&
+            s[s.length - 1] === topColor &&
+            d.length < TUBE_SIZE
+          ) {
             d.push(s.pop()!);
           }
           const key = serialize(next);
@@ -165,7 +185,8 @@ export class AppComponent implements OnInit {
     }
   }
   isValidTarget(index: number): boolean {
-    if (this.selectedIndex === null || this.selectedIndex === index) return false;
+    if (this.selectedIndex === null || this.selectedIndex === index)
+      return false;
     return this.canPour(this.selectedIndex, index);
   }
   get gridColumns(): string {
@@ -189,15 +210,26 @@ export class AppComponent implements OnInit {
     const src = this.tubes[from];
     const dst = this.tubes[to];
     const topColor = src[src.length - 1];
-    while (src.length > 0 && src[src.length - 1] === topColor && dst.length < this.TUBE_SIZE) {
+    while (
+      src.length > 0 &&
+      src[src.length - 1] === topColor &&
+      dst.length < this.TUBE_SIZE
+    ) {
       dst.push(src.pop()!);
     }
   }
   private checkWin(): boolean {
-    return this.tubes.every((t) => t.length === 0 || (t.length === this.TUBE_SIZE && t.every((c) => c === t[0])));
+    return this.tubes.every(
+      (t) =>
+        t.length === 0 ||
+        (t.length === this.TUBE_SIZE && t.every((c) => c === t[0])),
+    );
   }
   getSlots(tube: string[]): (string | null)[] {
-    return Array.from({ length: this.TUBE_SIZE }, (_, i) => tube[this.TUBE_SIZE - 1 - i] ?? null);
+    return Array.from(
+      { length: this.TUBE_SIZE },
+      (_, i) => tube[this.TUBE_SIZE - 1 - i] ?? null,
+    );
   }
   isSolved(tube: string[]): boolean {
     return tube.length === this.TUBE_SIZE && tube.every((c) => c === tube[0]);
@@ -205,7 +237,9 @@ export class AppComponent implements OnInit {
   showNext(): void {
     if (this.won) return;
     if (this.solutionPath.length === 0) {
-      this.solutionPath = this.findSolution(JSON.parse(JSON.stringify(this.tubes)));
+      this.solutionPath = this.findSolution(
+        JSON.parse(JSON.stringify(this.tubes)),
+      );
       if (this.solutionPath.length === 0) {
         alert('No solution found from current state. Try undoing some moves.');
         return;
@@ -220,11 +254,22 @@ export class AppComponent implements OnInit {
   private findSolution(initialTubes: string[][]): string[][][] {
     const TUBE_SIZE = this.TUBE_SIZE;
     const MAX_STATES = 50000;
-    const serialize = (tubes: string[][]): string => tubes.map((t) => t.join(',')).sort().join('|');
-    const isWon = (tubes: string[][]): boolean => tubes.every((t) => t.length === 0 || (t.length === TUBE_SIZE && t.every((c) => c === t[0])));
+    const serialize = (tubes: string[][]): string =>
+      tubes
+        .map((t) => t.join(','))
+        .sort()
+        .join('|');
+    const isWon = (tubes: string[][]): boolean =>
+      tubes.every(
+        (t) =>
+          t.length === 0 ||
+          (t.length === TUBE_SIZE && t.every((c) => c === t[0])),
+      );
     const startKey = serialize(initialTubes);
     const parent = new Map<string, string>([[startKey, '']]);
-    const stateMap = new Map<string, string[][]>([[startKey, initialTubes.map((t) => [...t])]]);
+    const stateMap = new Map<string, string[][]>([
+      [startKey, initialTubes.map((t) => [...t])],
+    ]);
     const queue: string[][][] = [initialTubes.map((t) => [...t])];
     while (queue.length > 0) {
       if (stateMap.size > MAX_STATES) return [];
@@ -242,7 +287,8 @@ export class AppComponent implements OnInit {
       for (let from = 0; from < state.length; from++) {
         const src = state[from];
         if (src.length === 0) continue;
-        if (src.length === TUBE_SIZE && src.every((c) => c === src[0])) continue;
+        if (src.length === TUBE_SIZE && src.every((c) => c === src[0]))
+          continue;
         const topColor = src[src.length - 1];
         const isAllSameColor = src.every((c) => c === topColor);
         for (let to = 0; to < state.length; to++) {
@@ -254,7 +300,11 @@ export class AppComponent implements OnInit {
           const next = state.map((t) => [...t]);
           const s = next[from],
             d = next[to];
-          while (s.length > 0 && s[s.length - 1] === topColor && d.length < TUBE_SIZE) {
+          while (
+            s.length > 0 &&
+            s[s.length - 1] === topColor &&
+            d.length < TUBE_SIZE
+          ) {
             d.push(s.pop()!);
           }
           const key = serialize(next);

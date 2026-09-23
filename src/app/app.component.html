@@ -20,9 +20,9 @@
     <button
       class="restart-btn"
       (click)="restartGame()"
-      [disabled]="moves === 0"
+      [disabled]="moves === 100"
     >
-      Rest
+      Rest {{ restCount }}
     </button>
 
     <button
@@ -35,20 +35,15 @@
 
     <button
       class="restart-btn"
-      style="display: none"
       (click)="showNext()"
-      [disabled]="won"
+      [disabled]="won || restCount < 5"
     >
-      H2({{ isCurrentSolvable }})
+      H2({{ solutionPath.length }})
     </button>
   </div>
 
   <div class="header" style="display: block">
-    Moves: <strong>{{ moves }}</strong> 
-    @if(!isCurrentSolvable){
-      &nbsp;<span> not solvable !</span>
-    }
-    
+    Moves: <strong>{{ moves }}</strong>
   </div>
 
   <div class="tubes-grid" [style.grid-template-columns]="gridColumns">
