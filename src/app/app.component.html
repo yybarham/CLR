@@ -15,7 +15,7 @@
 
     <div class="divider"></div>
 
-    <button class="restart-btn" (click)="newGame()">New</button>
+    <button class="restart-btn" (click)="newGame()">Ne1</button>
 
     <button
       class="restart-btn"
@@ -34,7 +34,7 @@
     <button
       class="restart-btn"
       (click)="showNext()"
-      [disabled]="won || restCount < 25"
+      [disabled]="won || restCount < 10"
     >
       H({{ solutionPath.length }})
     </button>

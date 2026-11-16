@@ -353,7 +353,7 @@
     padding: 8px;
   }
   .tube {
-    width: 32px;
+    width: 36px;
   }
   .tube-base {
     width: 32px;
@@ -361,6 +361,6 @@
     height: 2px;
   }
   .color-slot {
-    height: 28px;
+    height: 32px;
   }
 }
