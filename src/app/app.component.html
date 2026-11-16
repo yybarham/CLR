@@ -21,14 +21,14 @@
       class="restart-btn"
       (click)="restartGame()"
       [disabled]="moves === 100"
-    > Rest {{ restCount }}</button>
+    > Rst {{ restCount }}</button>
 
     <button
       class="restart-btn"
       (click)="undo()"
       [disabled]="moveHistory.length === 0"
     >
-      Undo
+      Un {{ moves }}
     </button>
 
     <button
@@ -40,7 +40,7 @@
     </button>
   </div>
 
-  <div class="header" style="display: block">
+  <div class="header" style="display: none">
     Moves: <strong>{{ moves }}</strong>
   </div>
 

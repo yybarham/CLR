@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './app.component.css',
 })
 export class AppComponent implements OnInit {
-  readonly TUBE_SIZE = 4;
+  readonly TUBE_SIZE = 5;
   readonly COLORS = [
     '#FF0000',
     '#FFFF00',
@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
     '#bb6d3e',
     '#9F9F9F',
   ];
-  readonly DIFFICULTY_LEVELS = [3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  readonly DIFFICULTY_LEVELS = [6, 7, 8, 9, 10, 11, 12];
   tubes: string[][] = [];
   moveHistory: string[][][] = [];
   selectedIndex: number | null = null;
@@ -59,7 +59,8 @@ export class AppComponent implements OnInit {
         return;
       }
     }
-``  }
+    ``;
+  }
   restartGame(): void {
     this.restCount++;
     const saved = localStorage.getItem('colorSortGame');
