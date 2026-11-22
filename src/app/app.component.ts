@@ -173,7 +173,26 @@ export class AppComponent implements OnInit {
   onTubeClick(index: number): void {
     if (this.won) return;
     if (this.selectedIndex === null) {
-      if (this.tubes[index].length > 0) this.selectedIndex = index;
+      if (this.tubes[index].length > 0) {
+        const validTargets = this.tubes
+          .map((_, targetIndex) => targetIndex)
+          .filter(
+            (targetIndex) =>
+              targetIndex !== index &&
+              this.canPourWholeGroup(index, targetIndex),
+          );
+
+        if (validTargets.length === 1) {
+          this.moveHistory.push(JSON.parse(JSON.stringify(this.tubes)));
+          this.pour(index, validTargets[0]);
+          this.moves++;
+          this.solutionPath = [];
+          if (this.checkWin()) this.won = true;
+          this.updateNoMove();
+        } else {
+          this.selectedIndex = index;
+        }
+      }
     } else if (this.selectedIndex === index) {
       this.selectedIndex = null;
     } else if (this.canPour(this.selectedIndex, index)) {
