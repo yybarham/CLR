@@ -108,7 +108,7 @@ export class AppComponent implements OnInit {
   }
   private isSolvable(initialTubes: string[][]): boolean {
     const TUBE_SIZE = this.TUBE_SIZE;
-    const MAX_STATES = 30000;
+    const MAX_STATES = 200000;
     const serialize = (tubes: string[][]): string =>
       tubes
         .map((t) => t.join(','))
