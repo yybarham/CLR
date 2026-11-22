@@ -215,7 +215,18 @@ export class AppComponent implements OnInit {
   }
   private updateNoMove(): void {
     this.noMove = !this.tubes.some((_, from) =>
-      this.tubes.some((_, to) => from !== to && this.canPour(from, to)),
+      this.tubes.some(
+        (_, to) => from !== to && this.canPourWholeGroup(from, to),
+      ),
+    );
+  }
+  private canPourWholeGroup(from: number, to: number): boolean {
+    if (!this.canPour(from, to)) return false;
+    const src = this.tubes[from];
+    const dst = this.tubes[to];
+    const topColor = src[src.length - 1];
+    return (
+      this.TUBE_SIZE - dst.length >= this.getPouredCount(src, topColor)
     );
   }
   private pour(from: number, to: number): void {
