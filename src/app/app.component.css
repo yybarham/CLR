@@ -17,6 +17,8 @@
   gap: 24px;
   overflow: hidden;
   box-sizing: border-box;
+  touch-action: manipulation;
+  user-select: none;
 }
 .header {
   text-align: center;
@@ -365,5 +367,5 @@
   }
 }
 .no-move{
-  border: solid red 1px;
+  border: solid red 2px;
 }

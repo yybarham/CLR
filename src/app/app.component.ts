@@ -345,4 +345,7 @@ export class AppComponent implements OnInit {
   closeWinPopup(): void {
     this.won = false;
   }
+  preventZoom(event: MouseEvent): void {
+    event.preventDefault();
+  }
 }
