@@ -364,3 +364,6 @@
     height: 32px;
   }
 }
+.no-move{
+  border: solid red 1px;
+}

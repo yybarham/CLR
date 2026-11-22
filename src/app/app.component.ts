@@ -1,9 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
@@ -29,6 +30,7 @@ export class AppComponent implements OnInit {
   selectedIndex: number | null = null;
   moves = 0;
   won = false;
+  noMove = true;
   difficulty: number = 12;
   solutionPath: string[][][] = [];
   restCount = 0;
@@ -44,6 +46,7 @@ export class AppComponent implements OnInit {
     this.tubes = this.generateLevel(this.difficulty);
     this.moveHistory = [];
     this.solutionPath = [];
+    this.updateNoMove();
     this.saveGame();
     this.checkSolvable();
   }
@@ -71,6 +74,7 @@ export class AppComponent implements OnInit {
       this.selectedIndex = null;
       this.moveHistory = [];
       this.solutionPath = [];
+      this.updateNoMove();
     } else {
       this.newGame();
     }
@@ -179,6 +183,7 @@ export class AppComponent implements OnInit {
       this.selectedIndex = null;
       this.solutionPath = [];
       if (this.checkWin()) this.won = true;
+      this.updateNoMove();
     } else if (this.tubes[index].length > 0) {
       this.selectedIndex = index;
     } else {
@@ -199,6 +204,7 @@ export class AppComponent implements OnInit {
       this.moves--;
       this.selectedIndex = null;
       this.won = false;
+      this.updateNoMove();
     }
   }
   private canPour(from: number, to: number): boolean {
@@ -206,6 +212,11 @@ export class AppComponent implements OnInit {
     const dst = this.tubes[to];
     if (src.length === 0 || dst.length >= this.TUBE_SIZE) return false;
     return dst.length === 0 || src[src.length - 1] === dst[dst.length - 1];
+  }
+  private updateNoMove(): void {
+    this.noMove = !this.tubes.some((_, from) =>
+      this.tubes.some((_, to) => from !== to && this.canPour(from, to)),
+    );
   }
   private pour(from: number, to: number): void {
     const src = this.tubes[from];
@@ -251,6 +262,7 @@ export class AppComponent implements OnInit {
     this.moves++;
     this.selectedIndex = null;
     if (this.checkWin()) this.won = true;
+    this.updateNoMove();
   }
   private findSolution(initialTubes: string[][]): string[][][] {
     const TUBE_SIZE = this.TUBE_SIZE;

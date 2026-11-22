@@ -44,7 +44,7 @@
     Moves: <strong>{{ moves }}</strong>
   </div>
 
-  <div class="tubes-grid" [style.grid-template-columns]="gridColumns">
+  <div class="tubes-grid" [ngClass]="{'no-move': noMove}" [style.grid-template-columns]="gridColumns">
     @for (tube of tubes; track $index; let i = $index) {
       <div
         class="tube-wrapper"
