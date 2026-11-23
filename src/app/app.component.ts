@@ -182,9 +182,16 @@ export class AppComponent implements OnInit {
               this.canPourWholeGroup(index, targetIndex),
           );
 
-        if (validTargets.length === 1) {
+        const emptyTargets = validTargets.filter(
+          (targetIndex) => this.tubes[targetIndex].length === 0,
+        );
+
+        if (validTargets.length === 1 || emptyTargets.length === 2) {
           this.moveHistory.push(JSON.parse(JSON.stringify(this.tubes)));
-          this.pour(index, validTargets[0]);
+          this.pour(
+            index,
+            validTargets.length === 1 ? validTargets[0] : emptyTargets[0],
+          );
           this.moves++;
           this.solutionPath = [];
           if (this.checkWin()) this.won = true;
